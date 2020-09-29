@@ -1,0 +1,121 @@
+<div class="container shadow mt-2">
+  <h3 class="text-center text-info">Day Wise To-Do App</h3>
+  <br />
+  <form class="todo-form" #f="ngForm" (ngSubmit)="f.form.valid && saveTask(f)">
+    <div class="row">
+      <div class="col-12">
+        <label class="form-label">Select Date: </label>
+        <div
+          class="form-group form-field"
+          [ngStyle]="{
+            'border-color':
+              f.submitted && dateRef.invalid ? '#dc3545' : '#b1b1b3'
+          }"
+        >
+          <div class="input-group">
+            <input
+              class="form-control calendar-input"
+              placeholder="mm/dd/yyyy"
+              name="toDoDate"
+              #dateRef="ngModel"
+              required
+              [ngClass]="{
+                'is-invalid': f.submitted && dateRef.invalid
+              }"
+              (keydown)="$event.preventDefault()"
+              [(ngModel)]="toDoDate"
+              [owlDateTime]="dt1"
+            />
+            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            <div class="input-group-append">
+              <button
+                class="btn calendar"
+                [owlDateTimeTrigger]="dt1"
+                type="button"
+              >
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="custom-invalid-feedback"
+          *ngIf="f.submitted && dateRef.invalid"
+        >
+          <div *ngIf="dateRef.errors.required">Date is required</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Todo Text</label>
+        <textarea
+          class="form-control form-field"
+          #toDOTextRef="ngModel"
+          [(ngModel)]="toDoText"
+          placeholder="Enter Todo Text Here"
+          name="todotext"
+          rows="2"
+          required
+          [ngClass]="{
+            'is-invalid': f.submitted && dateRef.invalid
+          }"
+          [ngStyle]="{
+            'border-color':
+              f.submitted && toDOTextRef.invalid ? '#dc3545' : '#b1b1b3'
+          }"
+        ></textarea>
+        <div
+          *ngIf="f.submitted && toDOTextRef.invalid"
+          class="custom-invalid-feedback"
+        >
+          <div *ngIf="toDOTextRef.errors.required">Text is required</div>
+        </div>
+      </div>
+      <div class="col-12 text-center btn-div">
+        <button class="btn btn-outline-success btn-save">Save</button>
+        <button class="btn btn-outline-danger btn-cancel" type="reset">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<hr />
+<div class="container-fluid main-list-wrapper">
+  <div class="row">
+    <div class="col-4" *ngFor="let toDoObj of toDoListArray">
+      <div style="margin: 5px 2px" class="shadow list-wraper">
+        <h4 class="text-info text-center">
+          {{ getFormattedDate(toDoObj.date) }}
+        </h4>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let item of toDoObj.data">
+            <span
+              class="hover-cursor mr-2"
+              [class.text-success]="item.isChecked"
+              (click)="alterCheck(item)"
+            >
+              <i
+                class="fa fa-lg"
+                [ngClass]="
+                  item.isChecked ? 'fa-check-circle-o' : 'fa-circle-thin'
+                "
+              ></i>
+            </span>
+            <span
+              [ngStyle]="{
+                'text-decoration': item.isChecked ? 'line-through' : 'initial'
+              }"
+              >{{ item.title }}</span
+            >
+            <span
+              class="hover-cursor text-danger pull-right"
+              (click)="onDelete(item.id)"
+            >
+              <i class="fa fa-trash-o fa-lg"></i>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

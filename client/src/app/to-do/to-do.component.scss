@@ -1,0 +1,70 @@
+@mixin borderStyle {
+  border: 0;
+  outline: 0;
+}
+.todo-form {
+  width: 500px;
+  margin: auto;
+  padding: 10px;
+  .col-12{
+     margin-bottom: 5px; 
+  }
+  .form-label {
+    font-weight: 500;
+  }
+  .form-field:focus,
+  .calendar-input:focus,
+  .form-group .btn:focus {
+    @include borderStyle;
+    box-shadow: none;
+  }
+  .form-group {
+    margin-bottom: 0.2rem;
+  }
+  .form-field {
+    @include borderStyle;
+    border-radius: 0;
+    border-bottom: 1px solid grey;
+  }
+  .calendar-input,
+  .form-group .btn {
+    @include borderStyle;
+    border-radius: 0;
+  }
+  textarea.form-field {
+    resize: none;
+  }
+  textarea.form-field:focus {
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid grey;
+  }
+  .btn-div {
+    margin: 10px;
+    .btn {
+      width: 100px;
+    }
+  }
+  .btn-save {
+    margin-right: 15px;
+  }
+
+  .custom-invalid-feedback {
+    color: #dc3545;
+    font-size: 90%;
+  }
+}
+
+.main-list-wrapper{
+    .hover-cursor{
+        cursor: pointer;
+    }
+    .list-wraper{
+        min-height: 300px;
+    }
+    li{
+        border: 0;
+        border-bottom: 1px solid rgb(190, 186, 186);
+    }
+}
+
